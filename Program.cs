@@ -64,7 +64,7 @@ public class JSONSerializer {
 
             if (value.StartsWith("{"))
             {
-                // Oggetto annidato
+            
                 var method = typeof(JSONSerializer).GetMethod(nameof(CreateObject)).MakeGenericMethod(property.PropertyType);
                 object nestedObj = method.Invoke(this, new object[] { value, Activator.CreateInstance(property.PropertyType) });
                 property.SetValue(obj, nestedObj);
@@ -79,7 +79,6 @@ public class JSONSerializer {
         return obj;
     }
 
-    // Dividi JSON in proprietà al livello più esterno, ignorando virgole dentro oggetti
     private List<string> SplitTopLevel(string json)
     {
         List<string> result = new();
@@ -97,7 +96,7 @@ public class JSONSerializer {
             }
         }
 
-        result.Add(json.Substring(lastSplit)); // ultima proprietà
+        result.Add(json.Substring(lastSplit)); 
         return result;
     }
 
